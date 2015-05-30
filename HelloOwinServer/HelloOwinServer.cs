@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Owin;
 using Hello.Owin.Interfaces;
-using Owin;
 
 namespace Hello.Owin.Server
 {
     public class HelloOwinServer
     {
+        internal static bool UseJson;
+
         /// <summary>
         /// Wire up the message processing function for this application.
         /// </summary>
@@ -22,8 +19,8 @@ namespace Hello.Owin.Server
             // Wire up the Hello message processor component into the Owin pipeline
             var options = new HelloMessageProcessorOptions
             {
-                UseJsonRequest = HelloOwinMessagingConfig.UseJson,
-                UseJsonReply = HelloOwinMessagingConfig.UseJson,
+                UseJsonRequest = HelloOwinMessagingConfig.DefaultUseJson,
+                UseJsonReply = HelloOwinMessagingConfig.DefaultUseJson,
                 SendReplyTimestamp = true,
                 DefaultName = "World"
             };

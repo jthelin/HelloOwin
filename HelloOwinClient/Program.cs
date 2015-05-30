@@ -1,18 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using CmdLine;
 using Newtonsoft.Json;
 
 using Hello.Owin.Interfaces;
 
 namespace Hello.Owin.Client
 {
+    [CommandLineArguments(Program = "HelloOwinClient", Title = "HelloOwinClient", Description = "Hello Owin client example")]
+    internal class HelloOwinClientArguments
+    {
+        [CommandLineParameter(Command = "?", Default = false, Description = "Show Help", Name = "Help", IsHelp = true)]
+        public bool Help { get; set; }
+
+        [CommandLineParameter(Command = "json", Required = false,
+            Default = HelloOwinMessagingConfig.DefaultUseJson,
+            Description = "Use Json messaging.")]
+        public bool UseJson { get; set; }
+
+        [CommandLineParameter(Name = "address", ParameterIndex = 1, Required = false,
+            Default = HelloOwinMessagingConfig.DefaultAddress,
+            Description = "HTTP address this client should connect to.")]
+        public string Address { get; set; }
+    }
+
     public class Program
     {
         private static bool Verbose = true;
@@ -21,7 +37,13 @@ namespace Hello.Owin.Client
         {
             try
             {
-                return Run(args);
+                return Run();
+            }
+            catch (CommandLineException exception)
+            {
+                Console.WriteLine(exception.ArgumentHelp.Message);
+                Console.WriteLine(exception.ArgumentHelp.GetHelpText(Console.BufferWidth));
+                return -1;
             }
             catch (Exception ex)
             {
@@ -32,10 +54,12 @@ namespace Hello.Owin.Client
             }
         }
 
-        static int Run(string[] args)
+        private static int Run()
         {
-            string address = HelloOwinMessagingConfig.DefaultAddress;
-            bool useJson = HelloOwinMessagingConfig.UseJson;
+            HelloOwinClientArguments progArgs = CommandLine.Parse<HelloOwinClientArguments>();
+
+            string address = progArgs.Address;
+            bool useJson = progArgs.UseJson;
 
             string name = "Earth";
 

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hello.Owin.Interfaces
 {
     public static class HelloOwinMessagingConfig
     {
-        public static readonly string DefaultAddress = @"http://localhost:12345";
-        public static readonly bool UseJson = true;
+        public const string DefaultAddress = @"http://localhost:12345";
+        public const bool DefaultUseJson = true;
     }
 
     [Serializable]
