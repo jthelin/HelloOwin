@@ -2,6 +2,7 @@
 
 A simple example of a service-oriented client-server application written using [OWIN](http://owin.org)
 
+
 ## How to Run the Sample
 
 1. Build `HelloOwin.sln`, which should restore / download any missing NuGet packages.
@@ -16,11 +17,9 @@ A simple example of a service-oriented client-server application written using [
 If the server starts up ok, then you should see console messages similar to this:
 
 ``` console
-
 Starting Owin server at Address = http://localhost:12345 UseJson = True
 
 Press any key to exit.
-
 ```
 
 ### Client Log Messages 
@@ -28,11 +27,9 @@ Press any key to exit.
    If everything works ok for client, then you will see console messages similar to this.
 
 ``` console
-
 Hello, Jorgen!
 
 Press any key to exit.
-
 ```
 
 If the server is not running, 
@@ -40,11 +37,9 @@ or if the client is trying to connect to a different address than the server is 
 then you will see error messages on the console window similar to this.
 
 ``` console
-
 Error starting HelloOwinClient.exe
 System.AggregateException: One or more errors occurred. 
 ---> System.Net.WebException: Unable to connect to the remote server 
 ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 
 127.0.0.1:54321
-
 ```
