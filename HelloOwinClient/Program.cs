@@ -23,9 +23,14 @@ namespace Hello.Owin.Client
             Description = "Use Json messaging.")]
         public bool UseJson { get; set; }
 
-        [CommandLineParameter(Name = "address", ParameterIndex = 1, Required = false,
-            Default = HelloOwinMessagingConfig.DefaultAddress,
-            Description = "HTTP address this client should connect to.")]
+        [CommandLineParameter(Name = "name", ParameterIndex = 1, Required = false,
+            Default = "Earth",
+            Description = "Which name the server should say hello to.")]
+        public string Name { get; set; }
+
+        [CommandLineParameter(Name = "address", ParameterIndex = 2, Required = false,
+        Default = HelloOwinMessagingConfig.DefaultAddress,
+        Description = "HTTP address this client should connect to.")]
         public string Address { get; set; }
     }
 
@@ -60,8 +65,7 @@ namespace Hello.Owin.Client
 
             string address = progArgs.Address;
             bool useJson = progArgs.UseJson;
-
-            string name = "Earth";
+            string name = progArgs.Name;
 
             HelloRequest request = new HelloRequest
             {
