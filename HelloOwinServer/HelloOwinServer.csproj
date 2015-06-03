@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="HelloMessageProcessor.cs" />
     <Compile Include="HelloOwinServer.cs" />
+    <Compile Include="HelloOwinServerArguments.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
