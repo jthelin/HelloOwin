@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.Owin;
 using Newtonsoft.Json;
 
 using Hello.Owin.Interfaces;
 
 namespace Hello.Owin.Server
 {
-    using AppFunc = Func<IDictionary<string, object>, Task>;
     using Options = HelloMessageProcessorOptions;
 
     public class HelloMessageProcessorOptions
@@ -23,12 +22,13 @@ namespace Hello.Owin.Server
     /// <summary>
     /// Owin processor component for the Hello application.
     /// </summary>
-    public class HelloMessageProcessor
+    public class HelloMessageProcessor : OwinMiddleware
     {
-        private readonly AppFunc _next;
+        private readonly OwinMiddleware _next;
         private readonly Options _options;
 
-        public HelloMessageProcessor(AppFunc next, Options options)
+        public HelloMessageProcessor(OwinMiddleware next, Options options)
+            : base(next)
         {
             _next = next;
             _options = options;
@@ -38,12 +38,14 @@ namespace Hello.Owin.Server
         /// The main message processor function for this application.
         /// </summary>
         /// <seealso cref="http://owin.org/spec/spec/owin-1.0.0.html"/>
-        /// <param name="environment">Owin request environment</param>
+        /// <param name="context">Owin request environment</param>
         /// <returns>Task indicating when the processing of this request is Done.</returns>
-        public async Task Invoke(IDictionary<string, object> environment)
+        public override async Task Invoke(IOwinContext context)
         {
-            var request = environment["owin.RequestBody"] as Stream;
-            string name = await ReadRequest(request);
+            Stream requestStream = context.Request.Body;
+            Stream responseStream = context.Response.Body;
+
+            string name = await ReadRequest(requestStream);
 
             Trace.TraceInformation("Got request Name = {0}", name);
 
@@ -51,8 +53,7 @@ namespace Hello.Owin.Server
 
             Trace.TraceInformation("Sending response Message = {0}", message);
 
-            var response = environment["owin.ResponseBody"] as Stream;
-            await SendReply(response, message);
+            await SendReply(responseStream, message);
         }
 
         private async Task<string> ReadRequest(Stream requestStream)
