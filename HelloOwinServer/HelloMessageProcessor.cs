@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-using Hello.Owin.Interfaces;
 using Newtonsoft.Json;
+
+using Hello.Owin.Interfaces;
 
 namespace Hello.Owin.Server
 {
@@ -33,7 +33,7 @@ namespace Hello.Owin.Server
             _next = next;
             _options = options;
         }
- 
+
         /// <summary>
         /// The main message processor function for this application.
         /// </summary>
@@ -63,7 +63,7 @@ namespace Hello.Owin.Server
             }
 
             string name;
-            using (var reader = new StreamReader(requestStream))
+            using (StreamReader reader = new StreamReader(requestStream))
             {
                 string requestBody = await reader.ReadToEndAsync();
 
@@ -89,12 +89,13 @@ namespace Hello.Owin.Server
 
         private async Task SendReply(Stream responseStream, string message)
         {
-            using (var writer = new StreamWriter(responseStream))
+            using (StreamWriter writer = new StreamWriter(responseStream))
             {
                 if (_options.UseJsonReply)
                 {
                     Trace.TraceInformation("Send back reply as Json message");
-                    var replyData = new HelloReply
+
+                    HelloReply replyData = new HelloReply
                     {
                         Message = message
                     };
@@ -102,6 +103,7 @@ namespace Hello.Owin.Server
                     {
                         replyData.Timestamp = DateTime.UtcNow;
                     }
+
                     string data = JsonConvert.SerializeObject(replyData);
 
                     await writer.WriteAsync(data);
@@ -109,10 +111,12 @@ namespace Hello.Owin.Server
                 else
                 {
                     Trace.TraceInformation("Send back reply as plain text");
+
                     if (_options.SendReplyTimestamp)
                     {
                         await writer.WriteAsync(DateTime.Now.ToLongTimeString());
                     }
+
                     await writer.WriteAsync(message);
                 }
             }

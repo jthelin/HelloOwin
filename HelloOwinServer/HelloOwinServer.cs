@@ -1,4 +1,5 @@
 ﻿using Owin;
+
 using Hello.Owin.Interfaces;
 
 namespace Hello.Owin.Server
@@ -10,13 +11,12 @@ namespace Hello.Owin.Server
         /// <summary>
         /// Wire up the message processing function for this application.
         /// </summary>
-        /// <param name="app"></param>
+        /// <param name="app"> The Owin stack builder. </param>
         public void Configuration(IAppBuilder app)
         {
 #if DEBUG
             app.UseErrorPage();
 #endif
-            // Wire up the Hello message processor component into the Owin pipeline
             var options = new HelloMessageProcessorOptions
             {
                 UseJsonRequest = HelloOwinMessagingConfig.DefaultUseJson,
@@ -24,6 +24,8 @@ namespace Hello.Owin.Server
                 SendReplyTimestamp = true,
                 DefaultName = "World"
             };
+
+            // Wire up the Hello message processor component into the Owin pipeline
             app.Use<HelloMessageProcessor>(options);
         }
     }
