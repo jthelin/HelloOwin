@@ -1,0 +1,4 @@
+language: csharp
+solution: HelloOwin.sln
+mono:
+  - latest
