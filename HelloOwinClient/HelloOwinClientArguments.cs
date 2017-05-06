@@ -5,7 +5,7 @@ using Hello.Owin.Interfaces;
 namespace Hello.Owin.Client
 {
     [CommandLineArguments(Program = "HelloOwinClient", Title = "HelloOwinClient", Description = "Hello Owin client example")]
-    internal class HelloOwinClientArguments
+    public class HelloOwinClientArguments
     {
         [CommandLineParameter(Command = "?", Default = false, Description = "Show Help", Name = "Help", IsHelp = true)]
         public bool Help { get; set; }

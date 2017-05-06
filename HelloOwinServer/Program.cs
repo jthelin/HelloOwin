@@ -11,7 +11,9 @@ namespace Hello.Owin.Server
         {
             try
             {
-                return Run();
+                HelloOwinServerArguments progArgs = CommandLine.Parse<HelloOwinServerArguments>();
+
+                return Run(progArgs);
             }
             catch (CommandLineException exception)
             {
@@ -28,10 +30,8 @@ namespace Hello.Owin.Server
             }
         }
 
-        private static int Run()
+        private static int Run(HelloOwinServerArguments progArgs)
         {
-            HelloOwinServerArguments progArgs = CommandLine.Parse<HelloOwinServerArguments>();
-
             string address = progArgs.Address;
             bool useJson = progArgs.UseJson;
 

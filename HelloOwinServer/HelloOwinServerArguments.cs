@@ -5,7 +5,7 @@ using Hello.Owin.Interfaces;
 namespace Hello.Owin.Server
 {
     [CommandLineArguments(Program = "HelloOwinServer", Title = "HelloOwinServer", Description = "Hello Owin server example")]
-    internal class HelloOwinServerArguments
+    public class HelloOwinServerArguments
     {
         [CommandLineParameter(Command = "?", Default = false, Description = "Show Help", Name = "Help", IsHelp = true)]
         public bool Help { get; set; }
