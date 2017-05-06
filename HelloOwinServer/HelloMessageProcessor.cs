@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Owin;
@@ -115,7 +116,9 @@ namespace Hello.Owin.Server
 
                     if (_options.SendReplyTimestamp)
                     {
-                        await writer.WriteAsync(DateTime.Now.ToLongTimeString());
+                        DateTime now = DateTime.Now;
+                        string nowStr = now.ToString(DateTimeFormatInfo.InvariantInfo.SortableDateTimePattern);
+                        await writer.WriteAsync(nowStr);
                     }
 
                     await writer.WriteAsync(message);
