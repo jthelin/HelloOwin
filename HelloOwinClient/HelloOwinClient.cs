@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Net;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -50,9 +49,14 @@ namespace Hello.Owin.Client
             }
 
             Trace.TraceInformation("Sending web request to {0}", address);
-            WebRequest webRequest = await CreateWebRequest(address, requestBody);
+            Uri requestUri = new Uri(address);
+            string replyBody;
+            using (HttpClient httpClient = new HttpClient())
+            {
+                HttpRequestMessage httpMsg = CreateWebRequest(requestUri, requestBody);
 
-            string replyBody = await GetWebResponse(webRequest);
+                replyBody = await GetWebResponse(httpClient, httpMsg);
+            }
 
             if (Verbose) Trace.TraceInformation("Received web response data {0}", replyBody);
 
@@ -69,42 +73,33 @@ namespace Hello.Owin.Client
             return reply;
         }
 
-        private async Task<WebRequest> CreateWebRequest(string uri, string data)
+        private HttpRequestMessage CreateWebRequest(Uri requestUri, string data)
         {
-            const string method = "POST"; // Method must be POST to send a request body
+            HttpContent content = new StringContent(data);
 
-            if (Verbose) Trace.TraceInformation("Creating web request for method {0} address {1}", method, uri);
-
-            WebRequest webRequest = WebRequest.Create(uri);
-            webRequest.Method = method;
-            webRequest.ContentType = "application/x-www-form-urlencoded";
-
-            // Encode request data to UTF-8 byte array
-            byte[] byteArray = Encoding.UTF8.GetBytes(data);
-            webRequest.ContentLength = byteArray.Length;
-            using (Stream dataStream = webRequest.GetRequestStream())
+            HttpRequestMessage httpMsg = new HttpRequestMessage
             {
-                await dataStream.WriteAsync(byteArray, 0, byteArray.Length);
-            }
+                Method = HttpMethod.Post, // Method must be POST to send a request body
+                RequestUri = requestUri,
+                Content = content
+            };
 
-            return webRequest;
+            return httpMsg;
         }
 
-        public async Task<string> GetWebResponse(WebRequest webRequest)
+        public async Task<string> GetWebResponse(HttpClient httpClient, HttpRequestMessage httpMsg)
         {
-            // Get the original response.
-            HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse;
+            HttpResponseMessage response = await httpClient.SendAsync(httpMsg);
 
             Trace.TraceInformation("Server response code = {0} {1}",
-                response.StatusCode,
-                response.StatusDescription);
+                (int) response.StatusCode,
+                Enum.GetName(typeof(HttpStatusCode), response.StatusCode));
 
-            using (Stream dataStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(dataStream);
-                return await reader.ReadToEndAsync();
-            }
+            response.EnsureSuccessStatusCode(); // Throws exception if HTTP error ocurred.
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            return responseBody;
         }
-
     }
 }
