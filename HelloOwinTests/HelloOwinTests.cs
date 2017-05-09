@@ -7,16 +7,25 @@ using Xunit;
 
 namespace Hello.Owin.Tests
 {
-    public class HolloOwinTests
+    public class HelloOwinTests
     {
         [Fact]
-        public void ServerStartup()
+        public void ServerStartupTest()
         {
             using (TestServer server = TestServer.Create(app =>
             {
                 app.UseErrorPage(); // See Microsoft.Owin.Diagnostics
                 app.Use<HelloMessageProcessor>();
             }))
+            {
+                Console.WriteLine("Started Owin server {0}", server);
+            }
+        }
+
+        [Fact]
+        public void ServerHostStartupTest()
+        {
+            using (TestServer server = TestServer.Create<HelloOwinServer>())
             {
                 Console.WriteLine("Started Owin server {0}", server);
             }
