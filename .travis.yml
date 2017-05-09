@@ -2,3 +2,8 @@ language: csharp
 solution: HelloOwin.sln
 mono:
   - latest
+install:
+  - nuget restore HelloOwin.sln
+script:
+  - xbuild /p:Configuration=Release HelloOwin.sln
+  - mono ./packages/xunit.runners.*/tools/xunit.console.clr4.exe ./HelloOwinTests/bin/Release/HelloOwinTests.dll
