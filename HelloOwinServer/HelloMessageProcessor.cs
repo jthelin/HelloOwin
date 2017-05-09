@@ -28,6 +28,11 @@ namespace Hello.Owin.Server
         private readonly OwinMiddleware _next;
         private readonly Options _options;
 
+        public HelloMessageProcessor(OwinMiddleware next)
+            : base(next)
+        {
+            _next = next;
+        }
         public HelloMessageProcessor(OwinMiddleware next, Options options)
             : base(next)
         {
