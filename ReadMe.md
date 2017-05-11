@@ -1,9 +1,16 @@
-﻿# Hello Owin
+# Hello Owin
 
 A simple example of a service-oriented client-server application written using [OWIN](http://owin.org)
 
 
-## How to Run the Sample
+## Build Status
+
+Mono | Windows
+---- | -------
+[![Build Status](https://travis-ci.org/jthelin/HelloOwin.svg?branch=master)](https://travis-ci.org/jthelin/HelloOwin) | [![Build status](https://ci.appveyor.com/api/projects/status/qonxrrters2t5kxk?svg=true)](https://ci.appveyor.com/project/jthelin/helloowin)
+
+
+# How to Run the Sample
 
 1. Build `HelloOwin.sln`, which should restore / download any missing NuGet packages.
 
