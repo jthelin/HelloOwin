@@ -24,5 +24,12 @@ namespace Hello.Owin.Client
             Default = HelloOwinMessagingConfig.DefaultAddress,
             Description = "HTTP address this client should connect to.")]
         public string Address { get; set; }
+
+        public HelloOwinClientArguments()
+        {
+            Address = HelloOwinMessagingConfig.DefaultAddress;
+            UseJson = HelloOwinMessagingConfig.DefaultUseJson;
+            Name = "Earth";
+        }
     }
 }

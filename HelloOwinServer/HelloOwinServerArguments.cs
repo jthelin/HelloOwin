@@ -19,5 +19,11 @@ namespace Hello.Owin.Server
             Default = HelloOwinMessagingConfig.DefaultAddress,
             Description = "HTTP address this server should listen on.")]
         public string Address { get; set; }
+
+        public HelloOwinServerArguments()
+        {
+            Address = HelloOwinMessagingConfig.DefaultAddress;
+            UseJson = HelloOwinMessagingConfig.DefaultUseJson;
+        }
     }
 }
