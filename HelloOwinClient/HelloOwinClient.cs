@@ -13,7 +13,17 @@ namespace Hello.Owin.Client
     {
         public bool Verbose = true;
 
-        public int Run(HelloOwinClientArguments progArgs)
+        private readonly HttpClient _httpClient;
+
+        public HelloOwinClient()
+        { }
+
+        public HelloOwinClient(HttpClient httpClient)
+        {
+            this._httpClient = httpClient;
+        }
+
+        public async Task<int> Run(HelloOwinClientArguments progArgs)
         {
             string address = progArgs.Address;
             bool useJson = progArgs.UseJson;
@@ -24,13 +34,9 @@ namespace Hello.Owin.Client
                 Name = name
             };
 
-            HelloReply reply = Send(request, useJson, address).Result; // Blocking call ok because this is Main thread.
+            HelloReply reply = await Send(request, useJson, address);
 
             Console.WriteLine(reply.Message);
-
-            Console.WriteLine();
-            Console.WriteLine("Press any key to exit.");
-            Console.ReadLine();
 
             return 0;
         }
@@ -51,11 +57,22 @@ namespace Hello.Owin.Client
             Trace.TraceInformation("Sending web request to {0}", address);
             Uri requestUri = new Uri(address);
             string replyBody;
-            using (HttpClient httpClient = new HttpClient())
+            HttpClient client = null;
+            bool disposeClientAfterUse = _httpClient == null;
+            try
             {
+                client = _httpClient ?? new HttpClient();
+
                 HttpRequestMessage httpMsg = CreateWebRequest(requestUri, requestBody);
 
-                replyBody = await GetWebResponse(httpClient, httpMsg);
+                replyBody = await GetWebResponse(client, httpMsg);
+            }
+            finally
+            {
+                if (disposeClientAfterUse)
+                {
+                    client?.Dispose();
+                }
             }
 
             if (Verbose) Trace.TraceInformation("Received web response data {0}", replyBody);

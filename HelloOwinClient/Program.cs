@@ -14,7 +14,13 @@ namespace Hello.Owin.Client
 
                 HelloOwinClient client = new HelloOwinClient();
                 
-                return client.Run(progArgs);
+                int rc = client.Run(progArgs).Result; // Blocking call ok because this is Main thread.
+
+                Console.WriteLine();
+                Console.WriteLine("Press any key to exit.");
+                Console.ReadLine();
+
+                return rc;
             }
             catch (CommandLineException exception)
             {

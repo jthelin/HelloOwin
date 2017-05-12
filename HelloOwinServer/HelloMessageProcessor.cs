@@ -18,6 +18,14 @@ namespace Hello.Owin.Server
         public bool UseJsonReply { get; set; }
         public bool SendReplyTimestamp { get; set; }
         public string DefaultName { get; set; }
+
+        public HelloMessageProcessorOptions()
+        {
+            UseJsonRequest = HelloOwinMessagingConfig.DefaultUseJson;
+            UseJsonReply = HelloOwinMessagingConfig.DefaultUseJson;
+            SendReplyTimestamp = true;
+            DefaultName = "World";
+        }
     }
 
     /// <summary>
