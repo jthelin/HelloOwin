@@ -20,7 +20,7 @@ namespace Hello.Owin.Client
 
         public HelloOwinClient(HttpClient httpClient)
         {
-            this._httpClient = httpClient;
+            _httpClient = httpClient;
         }
 
         public async Task<int> Run(HelloOwinClientArguments progArgs)
@@ -90,7 +90,7 @@ namespace Hello.Owin.Client
             return reply;
         }
 
-        private HttpRequestMessage CreateWebRequest(Uri requestUri, string data)
+        private static HttpRequestMessage CreateWebRequest(Uri requestUri, string data)
         {
             HttpContent content = new StringContent(data);
 
