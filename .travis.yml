@@ -6,4 +6,4 @@ install:
   - nuget restore HelloOwin.sln
 script:
   - xbuild /p:Configuration=Release HelloOwin.sln
-  - mono ./packages/xunit.runners.*/tools/xunit.console.clr4.exe ./HelloOwinTests/bin/Release/HelloOwinTests.dll
+  - mono ./packages/xunit.runner.console.*/tools/net461/xunit.console.exe ./HelloOwinTests/bin/Release/HelloOwinTests.dll
