@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloOwinServer", "HelloOwinServer\HelloOwinServer.csproj", "{EF1F67FE-E31B-4321-95D1-B9576C8B9AE1}"
 EndProject
@@ -11,19 +11,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloOwinClient", "HelloOwi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7FF9DA8D-F4B3-46AF-A63A-EB456F46B6C1}"
 	ProjectSection(SolutionItems) = preProject
+		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
+		azure-pipelines.yml = azure-pipelines.yml
 		ReadMe.md = ReadMe.md
 		run-client.cmd = run-client.cmd
 		run-server.cmd = run-server.cmd
-		appveyor.yml = appveyor.yml
-		.travis.yml = .travis.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloOwinTests", "HelloOwinTests\HelloOwinTests.csproj", "{19BF71A2-89D4-4B22-B3C5-4A710376AA25}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{78B2AB9D-2E3C-429D-99EB-E81B0602C55C}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
