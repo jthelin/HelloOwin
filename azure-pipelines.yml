@@ -21,6 +21,11 @@ jobs:
       - task: NuGetToolInstaller@1
         displayName: 'Install NuGet Tools'
 
+      - task: VisualStudioTestPlatformInstaller@1
+        inputs:
+          packageFeedSelector: 'nugetOrg'
+          versionSelector: 'latestStable'
+
       - task: NuGetCommand@2
         inputs:
           restoreSolution: '$(solution)'
@@ -37,8 +42,25 @@ jobs:
         inputs:
           platform: '$(buildPlatform)'
           configuration: '$(buildConfiguration)'
+          testSelector: 'testAssemblies'
+          testAssemblyVer2: |
+            **/*tests.dll
+            !**/*TestAdapter.dll
+            !**/obj/** 
+          runTestsInIsolation: True
           codeCoverageEnabled: True
         displayName: 'Test'
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'vstest'
+          testResultsFiles: '**/*.trx'
+          searchFolder: '$(Agent.TempDirectory)'
+          failTaskOnFailedTests: True
+          publishRunAttachments: True
+          buildPlatform: '$(buildPlatform)'
+          buildConfiguration: '$(buildConfiguration)'
+        displayName: 'Publish Test Results'
 
   - job: 'csharpLinux'
     pool:
