@@ -6,28 +6,66 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-latest'
-
 variables:
-  solution: '**/*.sln'
+  solution: 'HelloOwin.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-steps:
-- task: NuGetToolInstaller@0
+jobs:
+  - job: 'csharpWindows'
+    pool:
+      vmImage: 'vs2017-win2016'
+    displayName: 'C# (Windows)'
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+    steps:
+      - task: NuGetToolInstaller@1
+        displayName: 'Install NuGet Tools'
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+      - task: NuGetCommand@2
+        inputs:
+          restoreSolution: '$(solution)'
+        displayName: 'NuGet Restore'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+      - task: VSBuild@1
+        inputs:
+          solution: '$(solution)'
+          platform: '$(buildPlatform)'
+          configuration: '$(buildConfiguration)'
+        displayName: 'Build'
+
+      - task: VSTest@2
+        inputs:
+          platform: '$(buildPlatform)'
+          configuration: '$(buildConfiguration)'
+          codeCoverageEnabled: True
+        displayName: 'Test'
+
+  - job: 'csharpLinux'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    displayName: 'C# (Linux)'
+
+    steps:
+      - task: NuGetToolInstaller@1
+        displayName: 'Install NuGet Tools'
+
+      - script: |
+          mono --version
+          msbuild /version
+          nuget --version
+          dotnet --info | grep 'Base Path'
+          ls /usr/share/dotnet/shared/Microsoft.NETCore.App/
+        displayName: 'Environment Info'
+
+      - task: NuGetCommand@2
+        inputs:
+          restoreSolution: '$(solution)'
+        displayName: 'NuGet Restore'
+
+      - script: |
+          msbuild /p:Configuration=$(buildConfiguration) $(solution)
+        displayName: 'Build'
+
+      - script: |
+          ./test.sh $(buildConfiguration)
+        displayName: 'Test'

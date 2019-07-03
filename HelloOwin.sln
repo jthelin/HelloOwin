@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ReadMe.md = ReadMe.md
 		run-client.cmd = run-client.cmd
 		run-server.cmd = run-server.cmd
+		test.sh = test.sh
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloOwinTests", "HelloOwinTests\HelloOwinTests.csproj", "{19BF71A2-89D4-4B22-B3C5-4A710376AA25}"
