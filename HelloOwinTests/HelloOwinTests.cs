@@ -6,11 +6,19 @@ using Hello.Owin.Server;
 using Microsoft.Owin.Testing;
 using Owin;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Hello.Owin.Tests
 {
     public class HelloOwinTests
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public HelloOwinTests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+
         [Fact]
         public void ServerStartupTest()
         {
@@ -20,7 +28,7 @@ namespace Hello.Owin.Tests
                 app.Use<HelloMessageProcessor>();
             }))
             {
-                Console.WriteLine("Started Owin server {0}", server);
+                _testOutputHelper.WriteLine("Started Owin server {0}", server);
             }
         }
 
@@ -29,7 +37,7 @@ namespace Hello.Owin.Tests
         {
             using (TestServer server = TestServer.Create<HelloOwinServer>())
             {
-                Console.WriteLine("Started Owin server {0}", server);
+                _testOutputHelper.WriteLine("Started Owin server {0}", server);
             }
         }
 
