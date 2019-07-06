@@ -28,7 +28,7 @@ namespace Hello.Owin.Tests
                 app.Use<HelloMessageProcessor>();
             }))
             {
-                _testOutputHelper.WriteLine("Started Owin server {0}", server);
+                _testOutputHelper.WriteLine("Started Owin server {0}-{1}", server, server.GetHashCode());
             }
         }
 
@@ -37,7 +37,7 @@ namespace Hello.Owin.Tests
         {
             using (TestServer server = TestServer.Create<HelloOwinServer>())
             {
-                _testOutputHelper.WriteLine("Started Owin server {0}", server);
+                _testOutputHelper.WriteLine("Started Owin server {0}-{1}", server, server.GetHashCode());
             }
         }
 
@@ -58,15 +58,21 @@ namespace Hello.Owin.Tests
                 app.Use<HelloMessageProcessor>(serverArgs);
             }))
             {
+                _testOutputHelper.WriteLine("Started Owin server {0}-{1}", server, server.GetHashCode());
+
                 clientArgs.Address = server.HttpClient.BaseAddress.AbsoluteUri;
+
+                _testOutputHelper.WriteLine("Creating Owin client for address {0}", clientArgs.Address);
 
                 HelloOwinClient client = new HelloOwinClient(server.HttpClient);
 
                 rc = await client.Run(clientArgs)
                     .WithTimeout(TimeSpan.FromSeconds(10));
+                
+                _testOutputHelper.WriteLine($"Run finished with rc={rc}");
             }
 
-            rc.Should().Be(0, "HelloOwinClient.Run rc = {0}", rc);
+            rc.Should().Be(0, $"HelloOwinClient.Run rc = {rc}");
         }
     }
 }
