@@ -5,5 +5,5 @@ mono:
 install:
   - nuget restore HelloOwin.sln
 script:
-  - xbuild /p:Configuration=Release HelloOwin.sln
-  - mono ./packages/xunit.runner.console.*/tools/net461/xunit.console.exe ./HelloOwinTests/bin/Release/HelloOwinTests.dll
+  - msbuild /p:Configuration=Release HelloOwin.sln
+  - ./test.sh Release
