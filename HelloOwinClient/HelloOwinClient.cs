@@ -104,7 +104,7 @@ namespace Hello.Owin.Client
             return httpMsg;
         }
 
-        public async Task<string> GetWebResponse(HttpClient httpClient, HttpRequestMessage httpMsg)
+        public static async Task<string> GetWebResponse(HttpClient httpClient, HttpRequestMessage httpMsg)
         {
             HttpResponseMessage response = await httpClient.SendAsync(httpMsg);
 
@@ -112,7 +112,7 @@ namespace Hello.Owin.Client
                 (int) response.StatusCode,
                 Enum.GetName(typeof(HttpStatusCode), response.StatusCode));
 
-            response.EnsureSuccessStatusCode(); // Throws exception if HTTP error ocurred.
+            response.EnsureSuccessStatusCode(); // Throws exception if HTTP error occurred.
 
             string responseBody = await response.Content.ReadAsStringAsync();
 
