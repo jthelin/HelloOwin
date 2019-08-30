@@ -13,7 +13,7 @@ namespace Hello.Owin.Client
                 HelloOwinClientArguments progArgs = CommandLine.Parse<HelloOwinClientArguments>();
 
                 HelloOwinClient client = new HelloOwinClient();
-                
+
                 int rc = client.Run(progArgs).Result; // Blocking call ok because this is Main thread.
 
                 Console.WriteLine();
@@ -30,7 +30,7 @@ namespace Hello.Owin.Client
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("Error starting {0}.exe", Assembly.GetEntryAssembly().GetName().Name);
+                Console.Error.WriteLine("Error starting {0}.exe", Assembly.GetEntryAssembly()?.GetName().Name);
                 Console.Error.WriteLine(ex);
                 Console.Error.Flush();
                 return 1;
