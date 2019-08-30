@@ -23,7 +23,7 @@ namespace Hello.Owin.Server
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("Error starting {0}.exe", Assembly.GetEntryAssembly().GetName().Name);
+                Console.Error.WriteLine("Error starting {0}.exe", Assembly.GetEntryAssembly()?.GetName().Name);
                 Console.Error.WriteLine(ex);
                 Console.Error.Flush();
                 return 1;

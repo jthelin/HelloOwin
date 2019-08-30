@@ -68,7 +68,7 @@ namespace Hello.Owin.Tests
 
                 rc = await client.Run(clientArgs)
                     .WithTimeout(TimeSpan.FromSeconds(10));
-                
+
                 _testOutputHelper.WriteLine($"Run finished with rc={rc}");
             }
 
