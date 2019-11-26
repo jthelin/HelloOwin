@@ -31,7 +31,7 @@ namespace Hello.Owin.Server
     /// <summary>
     /// Owin processor component for the Hello application.
     /// </summary>
-    public class HelloMessageProcessor : OwinMiddleware
+    public class HelloMessageProcessor : Microsoft.Owin.OwinMiddleware
     {
         private readonly OwinMiddleware _next;
         private readonly Options _options;
