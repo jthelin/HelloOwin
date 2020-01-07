@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using JetBrains.Annotations; 
 using Newtonsoft.Json;
 
 using Hello.Owin.Interfaces;
@@ -11,6 +12,7 @@ namespace Hello.Owin.Client
 {
     public class HelloOwinClient
     {
+        [PublicAPI]
         public bool Verbose = true;
 
         private readonly HttpClient _httpClient;
@@ -23,7 +25,7 @@ namespace Hello.Owin.Client
             _httpClient = httpClient;
         }
 
-        public async Task<int> Run(HelloOwinClientArguments progArgs)
+        public async Task<int> Run(HelloOwinClientArguments progArgs, TextWriter traceWriter)
         {
             string address = progArgs.Address;
             bool useJson = progArgs.UseJson;
@@ -34,16 +36,16 @@ namespace Hello.Owin.Client
                 Name = name
             };
 
-            HelloReply reply = await Send(request, useJson, address);
+            HelloReply reply = await Send(request, useJson, address, traceWriter);
 
-            Console.WriteLine(reply.Message);
+            traceWriter.WriteLine(reply.Message);
 
             return 0;
         }
 
-        private async Task<HelloReply> Send(HelloRequest request, bool useJson, string address)
+        private async Task<HelloReply> Send(HelloRequest request, bool useJson, string address, TextWriter traceWriter)
         {
-            if (Verbose) Trace.TraceInformation("Creating request data object");
+            if (Verbose) traceWriter.WriteLine("Creating request data object");
             string requestBody;
             if (useJson)
             {
@@ -54,7 +56,7 @@ namespace Hello.Owin.Client
                 requestBody = request.Name;
             }
 
-            Trace.TraceInformation("Sending web request to {0}", address);
+            traceWriter.WriteLine("Sending web request to {0}", address);
             Uri requestUri = new Uri(address);
             string replyBody;
             HttpClient client = null;
@@ -75,9 +77,9 @@ namespace Hello.Owin.Client
                 }
             }
 
-            if (Verbose) Trace.TraceInformation("Received web response data {0}", replyBody);
+            if (Verbose) traceWriter.WriteLine("Received web response data {0}", replyBody);
 
-            if (Verbose) Trace.TraceInformation("Decoding reply data object");
+            if (Verbose) traceWriter.WriteLine("Decoding reply data object");
             HelloReply reply;
             if (useJson)
             {
@@ -104,11 +106,11 @@ namespace Hello.Owin.Client
             return httpMsg;
         }
 
-        public static async Task<string> GetWebResponse(HttpClient httpClient, HttpRequestMessage httpMsg)
+        private static async Task<string> GetWebResponse(HttpClient httpClient, HttpRequestMessage httpMsg)
         {
             HttpResponseMessage response = await httpClient.SendAsync(httpMsg);
 
-            Trace.TraceInformation("Server response code = {0} {1}",
+            Console.WriteLine("Server response code = {0} {1}",
                 (int) response.StatusCode,
                 Enum.GetName(typeof(HttpStatusCode), response.StatusCode));
 

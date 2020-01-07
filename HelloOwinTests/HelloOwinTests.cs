@@ -1,12 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Hello.Owin.Client;
-using Hello.Owin.Server;
 using Microsoft.Owin.Testing;
 using Owin;
 using Xunit;
 using Xunit.Abstractions;
+
+using Hello.Owin.Client;
+using Hello.Owin.Server;
 
 namespace Hello.Owin.Tests
 {
@@ -66,7 +68,9 @@ namespace Hello.Owin.Tests
 
                 HelloOwinClient client = new HelloOwinClient(server.HttpClient);
 
-                rc = await client.Run(clientArgs)
+                TextWriter traceWriter = Console.Out;
+                
+                rc = await client.Run(clientArgs, traceWriter)
                     .WithTimeout(TimeSpan.FromSeconds(10));
 
                 _testOutputHelper.WriteLine($"Run finished with rc={rc}");

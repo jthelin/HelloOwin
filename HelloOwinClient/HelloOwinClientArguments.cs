@@ -1,9 +1,11 @@
 using CmdLine;
+using JetBrains.Annotations;
 
 using Hello.Owin.Interfaces;
 
 namespace Hello.Owin.Client
 {
+    [PublicAPI]
     [CommandLineArguments(Program = "HelloOwinClient", Title = "HelloOwinClient", Description = "Hello Owin client example")]
     public class HelloOwinClientArguments
     {

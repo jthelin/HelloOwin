@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Owin;
 using Newtonsoft.Json;
 
@@ -12,6 +12,7 @@ namespace Hello.Owin.Server
 {
     using Options = HelloMessageProcessorOptions;
 
+    [PublicAPI]
     public class HelloMessageProcessorOptions
     {
         public bool UseJsonRequest { get; set; }
@@ -31,6 +32,7 @@ namespace Hello.Owin.Server
     /// <summary>
     /// Owin processor component for the Hello application.
     /// </summary>
+    [PublicAPI]
     public class HelloMessageProcessor : Microsoft.Owin.OwinMiddleware
     {
         private readonly OwinMiddleware _next;
@@ -59,18 +61,21 @@ namespace Hello.Owin.Server
             Stream requestStream = context.Request.Body;
             Stream responseStream = context.Response.Body;
 
-            string name = await ReadRequest(requestStream);
+            // TextWriter traceWriter = context.TraceOutput;
+            TextWriter traceWriter = Console.Out;
 
-            Trace.TraceInformation("Got request Name = {0}", name);
+            string name = await ReadRequest(requestStream, traceWriter);
+
+            traceWriter.WriteLine("Got request Name = {0}", name);
 
             string message = "Hello, " + name + "!";
 
-            Trace.TraceInformation("Sending response Message = {0}", message);
+            traceWriter.WriteLine("Sending response Message = {0}", message);
 
-            await SendReply(responseStream, message);
+            await SendReply(responseStream, message, traceWriter);
         }
 
-        private async Task<string> ReadRequest(Stream requestStream)
+        private async Task<string> ReadRequest(Stream requestStream, TextWriter traceWriter)
         {
             if (Stream.Null.Equals(requestStream))
             {
@@ -84,31 +89,31 @@ namespace Hello.Owin.Server
 
                 if (string.IsNullOrEmpty(requestBody))
                 {
-                    Trace.TraceInformation("No body - use default name");
+                    traceWriter.WriteLine("No body - use default name");
                     name = _options.DefaultName;
                 }
                 else if (_options.UseJsonRequest)
                 {
-                    Trace.TraceInformation("Decode Json message from request body");
+                    traceWriter.WriteLine("Decode Json message from request body");
                     HelloRequest data = JsonConvert.DeserializeObject<HelloRequest>(requestBody);
                     name = data.Name;
                 }
                 else
                 {
-                    Trace.TraceInformation("Body text is the name data");
+                    traceWriter.WriteLine("Body text is the name data");
                     name = requestBody;
                 }
             }
             return name;
         }
 
-        private async Task SendReply(Stream responseStream, string message)
+        private async Task SendReply(Stream responseStream, string message, TextWriter traceWriter)
         {
             using (StreamWriter writer = new StreamWriter(responseStream))
             {
                 if (_options.UseJsonReply)
                 {
-                    Trace.TraceInformation("Send back reply as Json message");
+                    traceWriter.WriteLine("Send back reply as Json message");
 
                     HelloReply replyData = new HelloReply
                     {
@@ -125,7 +130,7 @@ namespace Hello.Owin.Server
                 }
                 else
                 {
-                    Trace.TraceInformation("Send back reply as plain text");
+                    traceWriter.WriteLine("Send back reply as plain text");
 
                     if (_options.SendReplyTimestamp)
                     {
