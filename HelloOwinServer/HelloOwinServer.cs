@@ -1,7 +1,9 @@
-﻿using Owin;
+﻿using JetBrains.Annotations;
+using Owin;
 
 namespace Hello.Owin.Server
 {
+    [UsedImplicitly]
     public class HelloOwinServer
     {
         internal static bool UseJson;
@@ -10,6 +12,7 @@ namespace Hello.Owin.Server
         /// Wire up the message processing function for this application.
         /// </summary>
         /// <param name="app"> The Owin stack builder. </param>
+        [UsedImplicitly]
         public void Configuration(IAppBuilder app)
         {
 #if DEBUG

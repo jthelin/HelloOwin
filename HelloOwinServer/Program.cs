@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Reflection;
 using CmdLine;
+using JetBrains.Annotations;
 using Microsoft.Owin.Hosting;
 
 namespace Hello.Owin.Server
 {
+    [PublicAPI]
     public class Program
     {
         public static int Main(string[] args)

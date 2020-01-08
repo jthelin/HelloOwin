@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using CmdLine;
+using JetBrains.Annotations;
 
 namespace Hello.Owin.Client
 {
+    [PublicAPI]
     public class Program
     {
         public static int Main(string[] args)
@@ -12,9 +15,11 @@ namespace Hello.Owin.Client
             {
                 HelloOwinClientArguments progArgs = CommandLine.Parse<HelloOwinClientArguments>();
 
+                TextWriter traceWriter = Console.Out;
+
                 HelloOwinClient client = new HelloOwinClient();
 
-                int rc = client.Run(progArgs).Result; // Blocking call ok because this is Main thread.
+                int rc = client.Run(progArgs, traceWriter).Result; // Blocking call ok because this is Main thread.
 
                 Console.WriteLine();
                 Console.WriteLine("Press any key to exit.");

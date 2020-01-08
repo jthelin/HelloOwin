@@ -1,7 +1,9 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace Hello.Owin.Interfaces
 {
+    [PublicAPI]
     public static class HelloOwinMessagingConfig
     {
         public const string DefaultAddress = @"http://localhost:12345";
@@ -9,12 +11,14 @@ namespace Hello.Owin.Interfaces
     }
 
     [Serializable]
+    [PublicAPI]
     public class HelloRequest
     {
         public string Name { get; set; }
     }
 
     [Serializable]
+    [PublicAPI]
     public class HelloReply
     {
         public DateTime Timestamp { get; set; }

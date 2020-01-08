@@ -1,9 +1,11 @@
 ﻿using CmdLine;
+using JetBrains.Annotations;
 
 using Hello.Owin.Interfaces;
 
 namespace Hello.Owin.Server
 {
+    [PublicAPI]
     [CommandLineArguments(Program = "HelloOwinServer", Title = "HelloOwinServer", Description = "Hello Owin server example")]
     public class HelloOwinServerArguments
     {
