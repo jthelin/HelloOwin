@@ -62,12 +62,6 @@ jobs:
           buildConfiguration: '$(buildConfiguration)'
         displayName: 'Publish Test Results'
 
-      - task: PublishCodeCoverageResults@1
-        inputs:
-          codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
-          summaryFileLocation: '$(Agent.TempDirectory)/TestResults/*/*.coverage'
-        displayName: 'Publish Code Coverage Results'
-
   - job: 'csharpLinux'
     pool:
       vmImage: 'ubuntu-latest'
