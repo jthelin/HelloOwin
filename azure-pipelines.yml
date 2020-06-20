@@ -4,72 +4,72 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
 trigger:
-- master
+  - master
 
 variables:
-  solution: 'HelloOwin.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  solution: "HelloOwin.sln"
+  buildPlatform: "Any CPU"
+  buildConfiguration: "Release"
 
 jobs:
-  - job: 'csharpWindows'
+  - job: "csharpWindows"
     pool:
-      vmImage: 'windows-latest'
-    displayName: 'C# (Windows)'
+      vmImage: "windows-latest"
+    displayName: "C# (Windows)"
 
     steps:
       - task: NuGetToolInstaller@1
-        displayName: 'Install NuGet Tools'
+        displayName: "Install NuGet Tools"
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
-          packageFeedSelector: 'nugetOrg'
-          versionSelector: 'latestStable'
+          packageFeedSelector: "nugetOrg"
+          versionSelector: "latestStable"
 
       - task: NuGetCommand@2
         inputs:
-          restoreSolution: '$(solution)'
-        displayName: 'NuGet Restore'
+          restoreSolution: "$(solution)"
+        displayName: "NuGet Restore"
 
       - task: VSBuild@1
         inputs:
-          solution: '$(solution)'
-          platform: '$(buildPlatform)'
-          configuration: '$(buildConfiguration)'
-        displayName: 'Build'
+          solution: "$(solution)"
+          platform: "$(buildPlatform)"
+          configuration: "$(buildConfiguration)"
+        displayName: "Build"
 
       - task: VSTest@2
         inputs:
-          platform: '$(buildPlatform)'
-          configuration: '$(buildConfiguration)'
-          testSelector: 'testAssemblies'
+          platform: "$(buildPlatform)"
+          configuration: "$(buildConfiguration)"
+          testSelector: "testAssemblies"
           testAssemblyVer2: |
             **/*tests.dll
             !**/*TestAdapter.dll
-            !**/obj/** 
+            !**/obj/**
           runTestsInIsolation: True
           codeCoverageEnabled: True
-        displayName: 'Test'
+        displayName: "Test"
 
       - task: PublishTestResults@2
         inputs:
-          testResultsFormat: 'vstest'
-          testResultsFiles: '**/*.trx'
-          searchFolder: '$(Agent.TempDirectory)'
+          testResultsFormat: "vstest"
+          testResultsFiles: "**/*.trx"
+          searchFolder: "$(Agent.TempDirectory)"
           failTaskOnFailedTests: True
           publishRunAttachments: True
-          buildPlatform: '$(buildPlatform)'
-          buildConfiguration: '$(buildConfiguration)'
-        displayName: 'Publish Test Results'
+          buildPlatform: "$(buildPlatform)"
+          buildConfiguration: "$(buildConfiguration)"
+        displayName: "Publish Test Results"
 
-  - job: 'csharpLinux'
+  - job: "csharpLinux"
     pool:
-      vmImage: 'ubuntu-latest'
-    displayName: 'C# (Linux)'
+      vmImage: "ubuntu-latest"
+    displayName: "C# (Linux)"
 
     steps:
       - task: NuGetToolInstaller@1
-        displayName: 'Install NuGet Tools'
+        displayName: "Install NuGet Tools"
 
       - script: |
           mono --version
@@ -77,17 +77,17 @@ jobs:
           nuget --version
           dotnet --info | grep 'Base Path'
           ls /usr/share/dotnet/shared/Microsoft.NETCore.App/
-        displayName: 'Environment Info'
+        displayName: "Environment Info"
 
       - task: NuGetCommand@2
         inputs:
-          restoreSolution: '$(solution)'
-        displayName: 'NuGet Restore'
+          restoreSolution: "$(solution)"
+        displayName: "NuGet Restore"
 
       - script: |
           msbuild /p:Configuration=$(buildConfiguration) $(solution)
-        displayName: 'Build'
+        displayName: "Build"
 
       - script: |
           ./test.sh $(buildConfiguration)
-        displayName: 'Test'
+        displayName: "Test"
