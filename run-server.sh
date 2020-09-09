@@ -2,4 +2,4 @@
 
 BUILD_CONFIGURATION=${1:-"Debug"}
 
-mono HelloOwinServer/bin/${BUILD_CONFIGURATION}/*/HelloOwinServer.exe
+mono "HelloOwinServer/bin/${BUILD_CONFIGURATION}"/*/HelloOwinServer.exe
