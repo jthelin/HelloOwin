@@ -9,7 +9,7 @@
     <ItemGroup>
       <PackageReference Include="CmdLine" Version="1.0.7.509" />
       <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
-      <PackageReference Include="Microsoft.Owin.Diagnostics" Version="4.1.0" />
+      <PackageReference Include="Microsoft.Owin.Diagnostics" Version="4.1.1" />
       <PackageReference Include="Microsoft.Owin.Hosting" Version="4.1.0" />
       <PackageReference Include="Microsoft.Owin.SelfHost" Version="4.1.0" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
