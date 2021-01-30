@@ -4,16 +4,20 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: windows-latest
     strategy:
+      fail-fast: false
       matrix:
         dotnet: [ '3.1.x', '5.0.x' ]
-    name: DotNet ${{ matrix.dotnet }}
+        os: [ 'windows-latest', 'ubuntu-latest' ]
+    name: DotNet ${{ matrix.dotnet }} ${{ matrix.os }}
+    runs-on:  ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ matrix.dotnet }}
+      - name: Clean
+        run: dotnet clean --configuration Release && dotnet nuget locals all --clear
       - name: Build with dotnet
         run: dotnet build --configuration Release
       - name: Test with dotnet
