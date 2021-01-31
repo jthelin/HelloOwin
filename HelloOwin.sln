@@ -1,10 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloOwinServer", "HelloOwinServer\HelloOwinServer.csproj", "{EF1F67FE-E31B-4321-95D1-B9576C8B9AE1}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloOwinServer", "HelloOwinServer\HelloOwinServer.csproj", "{EF1F67FE-E31B-4321-95D1-B9576C8B9AE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloOwinInterfaces", "HelloOwinInterfaces\HelloOwinInterfaces.csproj", "{157A719F-60D9-48E8-8F0C-A75A84B17968}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloOwinInterfaces", "HelloOwinInterfaces\HelloOwinInterfaces.csproj", "{157A719F-60D9-48E8-8F0C-A75A84B17968}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloOwinClient", "HelloOwinClient\HelloOwinClient.csproj", "{55DDA7C3-A1D7-46DB-8FD3-AA535157374A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloOwinClient", "HelloOwinClient\HelloOwinClient.csproj", "{55DDA7C3-A1D7-46DB-8FD3-AA535157374A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7FF9DA8D-F4B3-46AF-A63A-EB456F46B6C1}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,13 +16,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		azure-pipelines.yml = azure-pipelines.yml
 		ReadMe.md = ReadMe.md
 		run-client.cmd = run-client.cmd
-		run-server.cmd = run-server.cmd
-		test.sh = test.sh
 		run-client.sh = run-client.sh
+		run-server.cmd = run-server.cmd
 		run-server.sh = run-server.sh
+		test.sh = test.sh
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloOwinTests", "HelloOwinTests\HelloOwinTests.csproj", "{19BF71A2-89D4-4B22-B3C5-4A710376AA25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloOwinTests", "HelloOwinTests\HelloOwinTests.csproj", "{19BF71A2-89D4-4B22-B3C5-4A710376AA25}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{D6E8BF0D-313E-403C-925F-86C31AE99F87}"
+	ProjectSection(SolutionItems) = preProject
+		.github\dependabot.yml = .github\dependabot.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{6995D36E-46CF-4D83-AC9B-DA9E3328DD0D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
+		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml
+		.github\workflows\linter.yml = .github\workflows\linter.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,5 +61,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6995D36E-46CF-4D83-AC9B-DA9E3328DD0D} = {D6E8BF0D-313E-403C-925F-86C31AE99F87}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC68379B-F5DB-4262-9E2D-29E4A3C8E665}
 	EndGlobalSection
 EndGlobal
