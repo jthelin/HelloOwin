@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		run-server.cmd = run-server.cmd
 		run-server.sh = run-server.sh
 		test.sh = test.sh
+		NuGet.Config = NuGet.Config
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloOwinTests", "HelloOwinTests\HelloOwinTests.csproj", "{19BF71A2-89D4-4B22-B3C5-4A710376AA25}"
