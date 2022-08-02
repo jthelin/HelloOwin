@@ -9,7 +9,7 @@
     <ItemGroup>
       <PackageReference Include="CmdLine" Version="1.0.7.509" />
       <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
-      <PackageReference Include="Microsoft.Owin.SelfHost" Version="4.2.0" />
+      <PackageReference Include="Microsoft.Owin.SelfHost" Version="4.2.2" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
