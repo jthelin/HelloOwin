@@ -10,7 +10,7 @@
 
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="6.7.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
         <PackageReference Include="Microsoft.Owin.Diagnostics" Version="4.2.2" />
         <PackageReference Include="Microsoft.Owin.Testing" Version="4.2.2" />
         <PackageReference Include="MSFT.ParallelExtensionsExtras" Version="1.2.0" />
