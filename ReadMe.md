@@ -4,9 +4,9 @@ A simple example of a service-oriented client-server application written using [
 
 ## Build Status
 
-Mono | Windows
----- | -------
-[![Build Status](https://travis-ci.org/jthelin/HelloOwin.svg?branch=master)](https://travis-ci.org/jthelin/HelloOwin) | [![Build status](https://ci.appveyor.com/api/projects/status/qonxrrters2t5kxk?svg=true)](https://ci.appveyor.com/project/jthelin/helloowin)
+Linux | Windows
+----- | -------
+[![.NET Core](https://github.com/jthelin/HelloOwin/actions/workflows/dotnetcore.yml/badge.svg)](https://github.com/jthelin/HelloOwin/actions/workflows/dotnetcore.yml) | [![Build status](https://ci.appveyor.com/api/projects/status/qonxrrters2t5kxk?svg=true)](https://ci.appveyor.com/project/jthelin/helloowin)
 
 ## How to Run the Sample
 
